@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a2f" />
+      <stop offset="100%" stop-color="#2d5a4c" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" rx="32" fill="url(#bgGrad)" />
+  <circle cx="200" cy="155" r="68" fill="#f2ece1" />
+  <path d="M90 350 C90 275, 310 275, 310 350" fill="#f2ece1" />
+  <text x="200" y="382" font-family="Georgia, serif" font-size="16" fill="#fcfaf6" text-anchor="middle" opacity="0.85">Replace with profile.jpg</text>
+</svg>
