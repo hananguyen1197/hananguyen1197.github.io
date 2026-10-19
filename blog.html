@@ -216,7 +216,7 @@
     }
     .blog-cover-img {
       width: 100%;
-      max-height: 360px;
+      max-height: 380px;
       object-fit: cover;
       border-radius: 14px;
       margin: 0.75rem 0 1.1rem;
@@ -236,6 +236,34 @@
     .blog-full-content p {
       margin-bottom: 1rem;
     }
+
+    /* Inline Images inside Blog Content */
+    .blog-inline-figure {
+      margin: 1.35rem 0;
+      background-color: var(--theme-surface, #f2ece1);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    }
+    .blog-inline-img {
+      width: 100%;
+      max-height: 460px;
+      object-fit: contain;
+      background-color: var(--theme-surface-2, #ffffff);
+      display: block;
+      margin: 0 auto;
+    }
+    .blog-inline-caption {
+      padding: 0.65rem 1rem;
+      font-size: 0.86rem;
+      font-style: italic;
+      color: var(--theme-text-muted, #52615a);
+      text-align: center;
+      background-color: var(--theme-surface, #f2ece1);
+      border-top: 1px solid var(--theme-border, #e0d8c8);
+    }
+
     .read-more-toggle {
       display: inline-flex;
       align-items: center;
@@ -275,7 +303,7 @@
       margin-top: 1.5rem;
       padding-top: 1.5rem;
       border-top: 1px solid var(--theme-border, #e0d8c8);
-      gap: 1rem;
+      gap: 1.1rem;
     }
     .composer-form.open {
       display: grid;
@@ -306,6 +334,80 @@
       font-family: inherit;
       font-size: 0.92rem;
     }
+
+    /* Image Insertion Toolbar inside Content Box */
+    .content-image-toolbar {
+      background-color: var(--theme-surface-2, #ffffff);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.35rem;
+      display: grid;
+      gap: 0.65rem;
+    }
+    .toolbar-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--theme-primary, #1e3a2f);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .toolbar-controls {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr auto auto;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    .toolbar-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      background-color: var(--theme-primary, #1e3a2f);
+      color: #ffffff;
+      border: none;
+      padding: 0.55rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .toolbar-btn.secondary {
+      background-color: var(--theme-surface, #f2ece1);
+      color: var(--theme-primary, #1e3a2f);
+      border: 1px solid var(--theme-border, #e0d8c8);
+    }
+    .toolbar-btn:hover {
+      opacity: 0.92;
+    }
+    .inserted-images-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
+    }
+    .inserted-img-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--theme-surface, #f2ece1);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .inserted-img-chip img {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
     .code-output-box {
       background: #121815;
       color: #eef2ef;
@@ -324,6 +426,11 @@
         bottom: 20px;
         right: 16px;
         width: 235px;
+      }
+    }
+    @media (max-width: 780px) {
+      .toolbar-controls {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -438,13 +545,13 @@
         <!-- Dynamic Blog Posts Container -->
         <div class="blog-grid" id="blog-posts-container"></div>
 
-        <!-- Built-in Post Writer Tool for Hana -->
+        <!-- Built-in Post Writer Tool for Hana (Co tich hop chen hinh anh vao Box Content) -->
         <div class="composer-box" id="post-writer-tool">
           <div class="composer-header" onclick="toggleComposer()">
             <div>
-              <h3 style="font-size: 1.15rem; color: var(--theme-primary);">✍️ Quick Blog Post Creator (Công cụ tạo bài viết mới cho Hana)</h3>
+              <h3 style="font-size: 1.15rem; color: var(--theme-primary);">✍️ Quick Blog Post Creator (Soạn bài &amp; Chèn ảnh trực tiếp vào nội dung)</h3>
               <p style="font-size: 0.86rem; color: var(--theme-text-muted);">
-                Nhấn vào đây để soạn bài viết mới, xem thử trực tiếp trên trang và lấy đoạn mã chèn vào <code>blog.html</code> chỉ trong 10 giây.
+                Nhấn vào đây để viết bài mới, chèn nhiều hình ảnh vào bất kỳ đoạn nào trong <strong>Box Content</strong> và lấy mã cập nhật <code>blog.html</code>.
               </p>
             </div>
             <button class="btn btn-section-outline" id="composer-toggle-btn" type="button" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
@@ -478,8 +585,8 @@
                 <input type="text" id="new-readtime" placeholder="Ví dụ: 3 min read" value="3 min read" />
               </div>
               <div class="form-group">
-                <label for="new-image">Tên file ảnh minh họa (Không bắt buộc)</label>
-                <input type="text" id="new-image" placeholder="Ví dụ: blog_1.jpg (để trống nếu không có ảnh)" />
+                <label for="new-image">Ảnh bìa đầu bài (Cover Image — Không bắt buộc)</label>
+                <input type="text" id="new-image" placeholder="Ví dụ: cover_sydney.jpg (để trống nếu không dùng)" />
               </div>
             </div>
 
@@ -488,9 +595,58 @@
               <textarea id="new-excerpt" rows="2" placeholder="Viết 1-2 câu giới thiệu ngắn gọn hiển thị bên ngoài thẻ bài viết..."></textarea>
             </div>
 
+            <!-- BOX CONTENT VOI THANH CONG CU CHEN HINH ANH -->
             <div class="form-group">
-              <label for="new-content">Nội dung đầy đủ (Full Content — xuống dòng để tách đoạn) *</label>
-              <textarea id="new-content" rows="6" placeholder="Viết nội dung bài blog của bạn tại đây. Mỗi lần nhấn Enter xuống dòng sẽ tự động tạo thành một đoạn văn đẹp mắt..."></textarea>
+              <label for="new-content">Nội dung đầy đủ (Box Content — Có hỗ trợ chèn nhiều hình ảnh xen kẽ) *</label>
+
+              <!-- Thanh cong cu chen hinh anh vao Box Content -->
+              <div class="content-image-toolbar">
+                <div class="toolbar-title">
+                  <span>🖼️ Chèn hình ảnh vào vị trí con trỏ trong Box Content:</span>
+                  <label style="font-weight: 500; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer;">
+                    <input type="checkbox" id="embed-base64-toggle" />
+                    Nhúng ảnh trực tiếp vào code (không cần upload file ảnh riêng lên GitHub)
+                  </label>
+                </div>
+
+                <div class="toolbar-controls">
+                  <input
+                    type="text"
+                    id="inline-img-src"
+                    placeholder="Tên file ảnh (vd: sydney_1.jpg) hoặc link URL ảnh..."
+                  />
+                  <input
+                    type="text"
+                    id="inline-img-caption"
+                    placeholder="Chú thích dưới ảnh (Caption — không bắt buộc)..."
+                  />
+                  <button type="button" class="toolbar-btn" onclick="insertImageTagFromInputs()">
+                    ➕ Chèn vào Content
+                  </button>
+                  <label class="toolbar-btn secondary" style="margin: 0;">
+                    📁 Chọn ảnh từ máy
+                    <input
+                      type="file"
+                      id="inline-img-file"
+                      accept="image/*"
+                      style="display: none;"
+                      onchange="handleLocalImageSelect(this)"
+                    />
+                  </label>
+                </div>
+
+                <div style="font-size: 0.78rem; color: var(--theme-text-muted);">
+                  💡 <strong>Mẹo:</strong> Đặt con trỏ chuột vào đoạn muốn thêm ảnh trong ô bên dưới rồi bấm <strong>"➕ Chèn vào Content"</strong> (hoặc bấm <strong>"📁 Chọn ảnh từ máy"</strong>). Cú pháp <code>[IMAGE: ten_anh.jpg | Chú thích ảnh]</code> sẽ tự động biến thành khung hình ảnh đẹp mắt trong bài viết!
+                </div>
+
+                <div class="inserted-images-preview" id="inserted-images-preview"></div>
+              </div>
+
+              <textarea
+                id="new-content"
+                rows="8"
+                placeholder="Viết nội dung bài blog của bạn tại đây...&#10;&#10;[IMAGE: sydney_1.jpg | Buổi sáng mùa xuân tại khuôn viên UNSW Sydney]&#10;&#10;Viết tiếp đoạn văn bên dưới bức ảnh..."
+              ></textarea>
             </div>
 
             <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
@@ -504,7 +660,7 @@
 
             <div class="code-output-box" id="generated-code-box"></div>
             <p id="composer-help-tip" style="display: none; font-size: 0.85rem; color: var(--theme-primary); font-weight: 600;">
-              💡 Cách lưu vĩnh viễn lên GitHub: Bạn chỉ cần Copy đoạn mã màu đen ở trên, mở file <code>blog.html</code> trên GitHub, dán ngay dưới dòng <code>const MY_BLOG_POSTS = [</code> rồi bấm <strong>Commit changes</strong>!
+              💡 Cách lưu vĩnh viễn lên GitHub: Bạn chỉ cần Copy đoạn mã màu đen ở trên, mở file <code>blog.html</code> trên GitHub, dán ngay dưới dòng <code>const MY_BLOG_POSTS = [</code> rồi bấm <strong>Commit changes</strong>! (Nếu dùng tên file ảnh như <code>sydney_1.jpg</code>, nhớ tải file ảnh đó lên cùng thư mục GitHub).
             </p>
           </div>
         </div>
@@ -543,8 +699,9 @@
   <script>
     /* =====================================================================
        DANH SÁCH BÀI VIẾT BLOG CỦA HANA (CẬP NHẬT BÀI MỚI TẠI ĐÂY)
-       - Để thêm bài mới, bạn chỉ cần thêm 1 khối { ... }, lên đầu danh sách.
-       - Hoặc dùng khung "Quick Blog Post Creator" ngay trên trang web để tạo mã!
+       - Để chèn ảnh vào giữa bài viết, bạn chỉ cần thêm dòng:
+         "[IMAGE: ten_file_anh.jpg | Chú thích bức ảnh]"
+         vào trong mảng content: [ ... ]
        ===================================================================== */
     const MY_BLOG_POSTS = [
       {
@@ -553,10 +710,11 @@
         date: "October 2026",
         category: "Personal Reflections",
         readTime: "2 min read",
-        image: "", // Điền tên file ảnh nếu có (ví dụ: "sydney_photo.jpg")
+        image: "", // Ảnh bìa đầu bài (để trống "" nếu chỉ muốn chèn ảnh bên trong content)
         excerpt: "Hello everyone! Welcome to my personal corner on the web where I document my journey in Sydney, my passion for mathematics education, and little moments in everyday life.",
         content: [
           "Thank you for visiting my personal blog! Moving from Vietnam to Sydney, Australia and studying/working at UNSW has been a meaningful chapter in my life.",
+          "[IMAGE: profile.jpg | Hana Nguyen in Sydney, Australia]",
           "Previously, as a secondary mathematics teacher in Vietnam across public, private, and international schools, I always loved sharing stories and learning experiences with my students and colleagues.",
           "I created this blog as a space to write down my personal reflections, share helpful mathematics & STEM teaching notes, and keep memories of the places I have lived. Stay tuned for upcoming posts!"
         ]
@@ -564,8 +722,53 @@
       // Dán bài viết mới của bạn vào ngay trên dòng này (nhớ có dấu phẩy ngăn cách giữa các bài)
     ];
 
+    // Bộ nhớ tạm lưu ảnh chọn từ máy tính để xem trước ngay lập tức
+    const LOCAL_IMAGE_PREVIEW_MAP = {};
+
     let currentCategoryFilter = 'all';
     let currentSearchQuery = '';
+
+    // Hàm chuyển đổi 1 dòng văn bản hoặc thẻ [IMAGE: src | caption] thành HTML
+    function renderContentBlock(blockText) {
+      if (!blockText) return '';
+      const trimmed = blockText.trim();
+
+      // Kiểm tra cú pháp [IMAGE: đường_dẫn | chú_thích] hoặc [IMAGE: đường_dẫn]
+      const imgMatch = trimmed.match(/^\[IMAGE:\s*([^|\]]+?)(?:\s*\|\s*([^\]]*))?\]$/i);
+      if (imgMatch) {
+        const rawSrc = imgMatch[1].trim();
+        const caption = (imgMatch[2] || '').trim();
+        const resolvedSrc = LOCAL_IMAGE_PREVIEW_MAP[rawSrc] || rawSrc;
+        const captionHtml = caption
+          ? `<figcaption class="blog-inline-caption">${caption}</figcaption>`
+          : '';
+        return `
+          <figure class="blog-inline-figure">
+            <img
+              src="${resolvedSrc}"
+              alt="${caption || 'Blog illustration'}"
+              class="blog-inline-img"
+              onerror="this.onerror=null; this.alt='Image not uploaded yet: ${rawSrc}';"
+            />
+            ${captionHtml}
+          </figure>
+        `;
+      }
+
+      // Nếu người dùng viết thẻ [IMAGE: ...] nằm chung trong đoạn văn
+      const inlineReplaced = trimmed.replace(
+        /\[IMAGE:\s*([^|\]]+?)(?:\s*\|\s*([^\]]*))?\]/gi,
+        (_, rawSrc, cap) => {
+          const cleanSrc = rawSrc.trim();
+          const cleanCap = (cap || '').trim();
+          const resolvedSrc = LOCAL_IMAGE_PREVIEW_MAP[cleanSrc] || cleanSrc;
+          const capHtml = cleanCap ? `<figcaption class="blog-inline-caption">${cleanCap}</figcaption>` : '';
+          return `</p><figure class="blog-inline-figure"><img src="${resolvedSrc}" alt="${cleanCap || 'Blog photo'}" class="blog-inline-img" />${capHtml}</figure><p>`;
+        }
+      );
+
+      return `<p>${inlineReplaced}</p>`;
+    }
 
     function renderBlogPosts() {
       const container = document.getElementById('blog-posts-container');
@@ -590,11 +793,12 @@
           </div>
         `;
       } else {
-        container.innerHTML = filtered.map((post, idx) => {
+        container.innerHTML = filtered.map((post) => {
+          const resolvedCover = LOCAL_IMAGE_PREVIEW_MAP[post.image] || post.image;
           const imageHtml = post.image
-            ? `<img src="${post.image}" alt="${post.title}" class="blog-cover-img" onerror="this.style.display='none'" />`
+            ? `<img src="${resolvedCover}" alt="${post.title}" class="blog-cover-img" onerror="this.style.display='none'" />`
             : '';
-          const paragraphsHtml = post.content.map(p => `<p>${p}</p>`).join('');
+          const bodyHtml = post.content.map(block => renderContentBlock(block)).join('');
           return `
             <article class="blog-post-card" id="${post.id}" data-category="${post.category}">
               <div class="blog-meta">
@@ -610,7 +814,7 @@
                 Read Full Post ↓
               </button>
               <div class="blog-full-content" id="content-${post.id}" style="display: none;">
-                ${paragraphsHtml}
+                ${bodyHtml}
               </div>
             </article>
           `;
@@ -632,6 +836,95 @@
       `;
 
       initScrollSpy();
+    }
+
+    // Chèn thẻ [IMAGE: src | caption] vào đúng vị trí con trỏ trong Box Content
+    function insertTextAtCursor(textarea, textToInsert) {
+      const startPos = textarea.selectionStart || 0;
+      const endPos = textarea.selectionEnd || 0;
+      const before = textarea.value.substring(0, startPos);
+      const after = textarea.value.substring(endPos);
+      const prefix = before.length > 0 && !before.endsWith('\n') ? '\n\n' : '';
+      const suffix = after.length > 0 && !after.startsWith('\n') ? '\n\n' : '\n';
+      const finalInsert = prefix + textToInsert + suffix;
+
+      textarea.value = before + finalInsert + after;
+      textarea.focus();
+      const newCursorPos = startPos + finalInsert.length;
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }
+
+    function insertImageTagFromInputs() {
+      const srcInput = document.getElementById('inline-img-src');
+      const capInput = document.getElementById('inline-img-caption');
+      const contentBox = document.getElementById('new-content');
+      if (!srcInput || !contentBox) return;
+
+      const srcVal = srcInput.value.trim();
+      if (!srcVal) {
+        alert('Vui lòng nhập tên file ảnh (ví dụ: sydney_1.jpg) hoặc bấm nút "📁 Chọn ảnh từ máy"!');
+        srcInput.focus();
+        return;
+      }
+      const capVal = capInput ? capInput.value.trim() : '';
+      const tag = capVal ? `[IMAGE: ${srcVal} | ${capVal}]` : `[IMAGE: ${srcVal}]`;
+      insertTextAtCursor(contentBox, tag);
+
+      srcInput.value = '';
+      if (capInput) capInput.value = '';
+    }
+
+    // Xử lý khi chọn file ảnh trực tiếp từ máy tính
+    function handleLocalImageSelect(fileInput) {
+      const file = fileInput && fileInput.files && fileInput.files[0];
+      if (!file) return;
+
+      const capInput = document.getElementById('inline-img-caption');
+      const contentBox = document.getElementById('new-content');
+      const embedToggle = document.getElementById('embed-base64-toggle');
+      const previewBar = document.getElementById('inserted-images-preview');
+      const caption = capInput ? capInput.value.trim() : '';
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.onload = function() {
+          // Nén ảnh vừa phải (max width 900px) để nhẹ trang
+          const canvas = document.createElement('canvas');
+          const maxW = 900;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxW) {
+            h = Math.round((h * maxW) / w);
+            w = maxW;
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+
+          // Lưu vào bộ nhớ tạm để xem thử ngay lập tức
+          LOCAL_IMAGE_PREVIEW_MAP[file.name] = compressedDataUrl;
+
+          const srcToUse = (embedToggle && embedToggle.checked) ? compressedDataUrl : file.name;
+          const tag = caption ? `[IMAGE: ${srcToUse} | ${caption}]` : `[IMAGE: ${srcToUse}]`;
+          insertTextAtCursor(contentBox, tag);
+
+          // Hiển thị chip ảnh nhỏ đã chèn
+          if (previewBar) {
+            const chip = document.createElement('div');
+            chip.className = 'inserted-img-chip';
+            chip.innerHTML = `<img src="${compressedDataUrl}" alt="${file.name}" /><span>Đã chèn: ${file.name}</span>`;
+            previewBar.appendChild(chip);
+          }
+
+          if (capInput) capInput.value = '';
+          fileInput.value = '';
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
     }
 
     function filterBlog(category, btn) {
@@ -672,8 +965,9 @@
       const rawContent = document.getElementById('new-content').value.trim() || 'Full content of my post...';
       const paragraphs = rawContent.split(/\n+/).map(s => s.trim()).filter(Boolean);
 
+      const newPostId = 'post-' + Date.now();
       const newPostObj = {
-        id: 'post-' + Date.now(),
+        id: newPostId,
         title,
         date,
         category,
@@ -683,9 +977,14 @@
         content: paragraphs
       };
 
-      // Add live to the top of the page so Hana can preview immediately
+      // Thêm lên đầu danh sách và mở sẵn nội dung bài vừa tạo để xem ngay ảnh đã chèn
       MY_BLOG_POSTS.unshift(newPostObj);
       renderBlogPosts();
+
+      const newlyCreatedContent = document.getElementById('content-' + newPostId);
+      if (newlyCreatedContent) {
+        newlyCreatedContent.style.display = 'block';
+      }
 
       const codeString = JSON.stringify(newPostObj, null, 2) + ',';
       const codeBox = document.getElementById('generated-code-box');
