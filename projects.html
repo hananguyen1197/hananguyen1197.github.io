@@ -9,42 +9,115 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .brand-logo-img {
+      width: 44px !important;
+      height: 44px !important;
+      max-width: 44px !important;
+      max-height: 44px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      object-position: center 25% !important;
+    }
+    .header-subbar {
+      margin-top: 0.65rem;
+      padding-top: 0.55rem;
+      border-top: 1px dashed #e0d8c8;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.3rem;
+    }
+    .status-widgets {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+      background-color: var(--theme-surface, #f2ece1);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.26rem 0.75rem;
+      border-radius: 999px;
+    }
+    .welcome-line {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--theme-primary, #1e3a2f);
+      font-weight: 500;
+      padding-left: 0.2rem;
+    }
+  </style>
 </head>
 <body>
 
   <!-- Header -->
   <header class="site-header">
-    <div class="container nav-wrapper">
-      <a href="index.html" class="brand-logo" title="Hana Nguyen Home">
-        <img src="profile.jpg" onerror="this.onerror=null; this.src='profile.svg';" alt="Hana Nguyen" class="brand-logo-img" />
-        <span>Hana Nguyen</span>
-      </a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html">Home &amp; CV</a></li>
-          <li><a href="index.html#skills">Skills</a></li>
-          <li><a href="index.html#experience">Work History</a></li>
-          <li><a href="index.html#education">Education</a></li>
-          <li><a href="projects.html" class="active">Projects</a></li>
-        </ul>
-      </nav>
-      <div class="theme-switcher" title="Odyssey Theme Switcher">
-        <span style="font-size: 0.78rem; font-weight: 600; margin-right: 0.25rem;">Theme:</span>
-        <button class="theme-btn active" style="background:#1e3a2f;" onclick="setTheme('classic', this)" aria-label="Classic Forest Theme"></button>
-        <button class="theme-btn" style="background:#1b365d;" onclick="setTheme('ocean', this)" aria-label="Ocean Theme"></button>
-        <button class="theme-btn" style="background:#7c3f2c;" onclick="setTheme('sand', this)" aria-label="Terracotta Theme"></button>
-        <button class="theme-btn" style="background:#121815;" onclick="setTheme('dark', this)" aria-label="Dark Theme"></button>
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="index.html" class="brand-logo" title="Hana Nguyen Home" style="display: inline-flex; align-items: center; gap: 10px;">
+          <img
+            src="profile.jpg"
+            alt="Hana Nguyen"
+            class="brand-logo-img"
+            width="44"
+            height="44"
+            style="width: 44px; height: 44px; max-width: 44px; max-height: 44px; border-radius: 50%; object-fit: cover; object-position: center 25%; flex-shrink: 0;"
+          />
+          <span>Hana Nguyen</span>
+        </a>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="index.html">Home &amp; CV</a></li>
+            <li><a href="index.html#skills">Skills</a></li>
+            <li><a href="index.html#experience">Work History</a></li>
+            <li><a href="index.html#education">Education</a></li>
+            <li><a href="projects.html" class="active">Projects</a></li>
+          </ul>
+        </nav>
+        <div class="theme-switcher" title="Odyssey Theme Switcher">
+          <span style="font-size: 0.82rem; font-weight: 600; margin-right: 0.25rem;">Theme:</span>
+          <button class="theme-btn active" style="background:#1e3a2f;" onclick="setTheme('classic', this)" aria-label="Classic Forest Theme"></button>
+          <button class="theme-btn" style="background:#1b365d;" onclick="setTheme('ocean', this)" aria-label="Ocean Theme"></button>
+          <button class="theme-btn" style="background:#7c3f2c;" onclick="setTheme('sand', this)" aria-label="Terracotta Theme"></button>
+          <button class="theme-btn" style="background:#121815;" onclick="setTheme('dark', this)" aria-label="Dark Theme"></button>
+        </div>
+      </div>
+
+      <!-- Top-Left Sydney Clock, Visitor Counter & Welcome Message -->
+      <div class="header-subbar">
+        <div class="status-widgets">
+          <div class="status-pill" title="Current Time in Sydney, NSW, Australia">
+            <span>🕒</span>
+            <strong>Sydney, AU:</strong>
+            <span id="sydney-clock">Loading Sydney time...</span>
+          </div>
+          <div class="status-pill" title="Total Website Visitors">
+            <span>👁️</span>
+            <strong>Visitors:</strong>
+            <span id="visitor-count">...</span>
+          </div>
+        </div>
+        <div class="welcome-line">
+          Welcome to my personal website! Wish you have a nice time
+        </div>
       </div>
     </div>
   </header>
 
   <main>
     <!-- Page Intro -->
-    <section class="hero" style="padding-bottom: 2.5rem;">
+    <section class="hero" style="padding: 3.2rem 0;">
       <div class="container">
         <span class="eyebrow">Portfolio &amp; Initiatives</span>
         <h1>Educational Projects</h1>
-        <p class="hero-bio" style="max-width: 780px;">
+        <p class="hero-bio" style="max-width: 780px; margin-bottom: 0;">
           A collection of my mathematics education projects, online courses, curriculum development initiatives, and interactive video lessons designed to make learning intuitive and engaging.
         </p>
       </div>
@@ -80,10 +153,10 @@
           </div>
 
           <div style="display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center; margin-top: 1rem;">
-            <a class="btn btn-outline" href="https://www.facebook.com/photo?fbid=1561502807542454&set=pcb.1561503097542425" target="_blank" rel="noopener noreferrer">
+            <a class="btn btn-section-outline" href="https://www.facebook.com/photo?fbid=1561502807542454&set=pcb.1561503097542425" target="_blank" rel="noopener noreferrer">
               View Project Feature on Facebook ↗
             </a>
-            <a class="btn btn-outline" href="https://kids.hoc247.vn/" target="_blank" rel="noopener noreferrer">
+            <a class="btn btn-section-outline" href="https://kids.hoc247.vn/" target="_blank" rel="noopener noreferrer">
               HOC247 Kids Platform ↗
             </a>
           </div>
@@ -165,7 +238,7 @@
       </div>
     </section>
 
-    <!-- Placeholder Section for Upcoming Projects (Easy to duplicate) -->
+    <!-- Placeholder Section for Upcoming Projects -->
     <section class="section" id="upcoming-projects">
       <div class="container">
         <div class="section-header">
@@ -173,14 +246,6 @@
           <h2>Future Educational Initiatives</h2>
           <p>New teaching resources, HSC &amp; IGCSE study guides, and learning projects will be updated here.</p>
         </div>
-        <!--
-        TEMPLATE DE THEM DU AN MOI (Copy khoi <div class="card">...</div> ben duoi khi ban muon them Project 02):
-        <div class="card" style="margin-bottom: 1.5rem;">
-          <span class="eyebrow">Project 02 • Category</span>
-          <h3>Ten Du An Moi</h3>
-          <p>Mo ta chi tiet ve du an...</p>
-        </div>
-        -->
       </div>
     </section>
   </main>
@@ -189,8 +254,15 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <a href="index.html" class="brand-logo">
-          <img src="profile.jpg" onerror="this.onerror=null; this.src='profile.svg';" alt="Hana Nguyen" class="brand-logo-img" />
+        <a href="index.html" class="brand-logo" style="display: inline-flex; align-items: center; gap: 10px;">
+          <img
+            src="profile.jpg"
+            alt="Hana Nguyen"
+            class="brand-logo-img"
+            width="44"
+            height="44"
+            style="width: 44px; height: 44px; max-width: 44px; max-height: 44px; border-radius: 50%; object-fit: cover; object-position: center 25%; flex-shrink: 0;"
+          />
           <span>Hana Nguyen</span>
         </a>
         <p style="color: var(--theme-text-muted); font-size: 0.9rem; margin-top: 0.45rem;">
@@ -206,6 +278,7 @@
   </footer>
 
   <script>
+    // 1. Theme Switcher
     function setTheme(themeName, btn) {
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('hana-odyssey-theme', themeName);
@@ -217,6 +290,63 @@
       if (saved) {
         document.documentElement.setAttribute('data-theme', saved);
       }
+    })();
+
+    // 2. Live Sydney, Australia Clock & Date (Australia/Sydney Timezone)
+    function updateSydneyClock() {
+      const clockEl = document.getElementById('sydney-clock');
+      if (!clockEl) return;
+      try {
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat('en-AU', {
+          timeZone: 'Australia/Sydney',
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+          timeZoneName: 'short'
+        });
+        clockEl.textContent = formatter.format(now);
+      } catch (e) {
+        clockEl.textContent = new Date().toLocaleString();
+      }
+    }
+    updateSydneyClock();
+    setInterval(updateSydneyClock, 1000);
+
+    // 3. Always-Visible Visitor Counter (Global API + Local Fallback so it never fails)
+    (function initVisitorCounter() {
+      const counterEl = document.getElementById('visitor-count');
+      if (!counterEl) return;
+
+      const storageKey = 'hana_portfolio_visitor_count';
+      const sessionKey = 'hana_portfolio_session_counted';
+      let localCount = parseInt(localStorage.getItem(storageKey) || '128', 10);
+
+      if (!sessionStorage.getItem(sessionKey)) {
+        localCount += 1;
+        localStorage.setItem(storageKey, String(localCount));
+        sessionStorage.setItem(sessionKey, 'true');
+      }
+      counterEl.textContent = localCount.toLocaleString();
+
+      // Fetch live global count for hananguyen.github.io
+      fetch('https://api.counterapi.dev/v1/hananguyen-github-io/visits/up')
+        .then(res => res.json())
+        .then(data => {
+          if (data && typeof data.count === 'number') {
+            const total = Math.max(data.count, localCount);
+            localStorage.setItem(storageKey, String(total));
+            counterEl.textContent = total.toLocaleString();
+          }
+        })
+        .catch(() => {
+          // Keeps the reliable localCount displayed if offline or blocked by adblockers
+        });
     })();
   </script>
 </body>

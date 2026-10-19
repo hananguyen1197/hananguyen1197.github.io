@@ -9,39 +9,115 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Fallback safety rules in case styles.css is cached */
+    .brand-logo-img {
+      width: 44px !important;
+      height: 44px !important;
+      max-width: 44px !important;
+      max-height: 44px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      object-position: center 25% !important;
+    }
+    .profile-photo-wrapper,
+    .profile-photo {
+      width: 220px !important;
+      height: 220px !important;
+      max-width: 220px !important;
+      max-height: 220px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      object-position: center 25% !important;
+    }
+    .header-subbar {
+      margin-top: 0.65rem;
+      padding-top: 0.55rem;
+      border-top: 1px dashed #e0d8c8;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.3rem;
+    }
+    .status-widgets {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+      background-color: var(--theme-surface, #f2ece1);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.26rem 0.75rem;
+      border-radius: 999px;
+    }
+    .welcome-line {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--theme-primary, #1e3a2f);
+      font-weight: 500;
+      padding-left: 0.2rem;
+    }
+  </style>
 </head>
 <body>
 
   <!-- Header -->
   <header class="site-header">
-    <div class="container nav-wrapper">
-      <!-- Image Logo instead of plain text logo -->
-      <a href="index.html" class="brand-logo" title="Hana Nguyen Home" style="display: inline-flex; align-items: center; gap: 10px;">
-  <img
-    src="profile.jpg"
-    alt="Hana Nguyen"
-    class="brand-logo-img"
-    width="44"
-    height="44"
-    style="width: 44px; height: 44px; max-width: 44px; max-height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0;"
-  />
-  <span>Hana Nguyen</span>
-</a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html" class="active">Home &amp; CV</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Work History</a></li>
-          <li><a href="#education">Education</a></li>
-          <li><a href="projects.html">Projects</a></li>
-        </ul>
-      </nav>
-      <div class="theme-switcher" title="Odyssey Theme Switcher">
-        <span style="font-size: 0.78rem; font-weight: 600; margin-right: 0.25rem;">Theme:</span>
-        <button class="theme-btn active" style="background:#1e3a2f;" onclick="setTheme('classic', this)" aria-label="Classic Forest Theme"></button>
-        <button class="theme-btn" style="background:#1b365d;" onclick="setTheme('ocean', this)" aria-label="Ocean Theme"></button>
-        <button class="theme-btn" style="background:#7c3f2c;" onclick="setTheme('sand', this)" aria-label="Terracotta Theme"></button>
-        <button class="theme-btn" style="background:#121815;" onclick="setTheme('dark', this)" aria-label="Dark Theme"></button>
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="index.html" class="brand-logo" title="Hana Nguyen Home" style="display: inline-flex; align-items: center; gap: 10px;">
+          <img
+            src="profile.jpg"
+            alt="Hana Nguyen"
+            class="brand-logo-img"
+            width="44"
+            height="44"
+            style="width: 44px; height: 44px; max-width: 44px; max-height: 44px; border-radius: 50%; object-fit: cover; object-position: center 25%; flex-shrink: 0;"
+          />
+          <span>Hana Nguyen</span>
+        </a>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="index.html" class="active">Home &amp; CV</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Work History</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="projects.html">Projects</a></li>
+          </ul>
+        </nav>
+        <div class="theme-switcher" title="Odyssey Theme Switcher">
+          <span style="font-size: 0.82rem; font-weight: 600; margin-right: 0.25rem;">Theme:</span>
+          <button class="theme-btn active" style="background:#1e3a2f;" onclick="setTheme('classic', this)" aria-label="Classic Forest Theme"></button>
+          <button class="theme-btn" style="background:#1b365d;" onclick="setTheme('ocean', this)" aria-label="Ocean Theme"></button>
+          <button class="theme-btn" style="background:#7c3f2c;" onclick="setTheme('sand', this)" aria-label="Terracotta Theme"></button>
+          <button class="theme-btn" style="background:#121815;" onclick="setTheme('dark', this)" aria-label="Dark Theme"></button>
+        </div>
+      </div>
+
+      <!-- Top-Left Sydney Clock, Visitor Counter & Welcome Message -->
+      <div class="header-subbar">
+        <div class="status-widgets">
+          <div class="status-pill" title="Current Time in Sydney, NSW, Australia">
+            <span>🕒</span>
+            <strong>Sydney, AU:</strong>
+            <span id="sydney-clock">Loading Sydney time...</span>
+          </div>
+          <div class="status-pill" title="Total Website Visitors">
+            <span>👁️</span>
+            <strong>Visitors:</strong>
+            <span id="visitor-count">...</span>
+          </div>
+        </div>
+        <div class="welcome-line">
+          Welcome to my personal website! Wish you have a nice time
+        </div>
       </div>
     </div>
   </header>
@@ -51,10 +127,10 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow">Mathematics Educator </span>
-          <h1>Hello, I am Hana Nguyen.</h1>
+          <span class="eyebrow">Mathematics Educator • UNSW Sydney</span>
+          <h1>Hello, I am<br>Hana Nguyen.</h1>
           <p class="hero-bio">
-            Hello, I am Hana Nguyen (also known Nguyen Thi Thu Ha), and I am currently based at NSW in Sydney, Australia. Prior to moving to Sydney, I worked as a secondary mathematics teacher in Vietnam, where I taught students across public, private, and international schools. These diverse experiences have given me a comprehensive perspective on mathematics education and inspired me to pursue my passion for teaching wherever I live.
+            Hello, I am Hana Nguyen, and I am currently based at <strong>UNSW in Sydney, Australia</strong>. Prior to moving to Sydney, I worked as a secondary mathematics teacher in Vietnam, where I taught students across public, private, and international schools. These diverse experiences have given me a comprehensive perspective on mathematics education and inspired me to pursue my passion for teaching wherever I live.
           </p>
           <div class="hero-actions">
             <a href="projects.html" class="btn btn-primary">Explore My Projects →</a>
@@ -63,31 +139,38 @@
 
           <div class="social-links" aria-label="Social Media Links">
             <a class="social-pill" href="https://www.youtube.com/@hannahnguyen1197" target="_blank" rel="noopener noreferrer">
-              <span>▶</span> YouTube (@hannahnguyen1197)
+              <span>▶</span> YouTube
             </a>
             <a class="social-pill" href="https://www.linkedin.com/in/hananguyen2032" target="_blank" rel="noopener noreferrer">
               <span>in</span> LinkedIn
             </a>
             <a class="social-pill" href="https://www.tiktok.com/@sansann1197?_r=1&_d=secCgYIASAHKAESPgo8ybvaP9Hiw1yEqId3xFMXYoGvlwo0RnXOLFOsuNCP21WvukDT0A%2BN9YW3cb6ua86VVXFKPe6RQxZWiKJQGgA%3D&_svg=1&checksum=01daa5360ecd79a1a711df788e97491df1dde43c97f0373275a575f93367ddc4&item_author_type=1&panel_source_v2=share_panel&reflow_sign_scene=7&rgssign=8.1.fwd2Ky9ssHoKdyAGJ64oGg&sec_uid=MS4wLjABAAAAig18TuYs-gs7yd3NKh6jT5uXrFYUhqXCjpAFqywmrA1LGJKL1TeZYu0RRx8Nj1e3&sec_user_id=MS4wLjABAAAAig18TuYs-gs7yd3NKh6jT5uXrFYUhqXCjpAFqywmrA1LGJKL1TeZYu0RRx8Nj1e3&share_app_id=1180&share_author_id=7079611484242002945&share_enter_from=personal_homepage&share_link_id=1BE26E54-167F-4D39-8E12-00484408ADDD&share_region=AU&share_scene=1&sharer_language=en&social_share_type=5&source=h5_t&timestamp=1792360132&tt_from=copy&u_code=e115faeff3gfk7&ug_btm=b0%2Cb0&user_id=7079611484242002945&utm_campaign=client_share&utm_medium=ios&utm_source=copy" target="_blank" rel="noopener noreferrer">
-              <span>♪</span> TikTok (@sansann1197)
+              <span>♪</span> TikTok
             </a>
           </div>
         </div>
 
-        <!-- Odyssey Profile Card with Image -->
+        <!-- Odyssey Profile Card with Circular Image -->
         <aside class="profile-card">
-          <div class="profile-photo-wrapper">
-            <img src="profile.jpg" onerror="this.onerror=null; this.src='profile.svg';" alt="Hana Nguyen Portrait" class="profile-photo" />
+          <div class="profile-photo-wrapper" style="width: 220px; height: 220px; max-width: 220px; max-height: 220px; margin: 0 auto 1.25rem; border-radius: 50%; overflow: hidden;">
+            <img
+              src="profile.jpg"
+              alt="Hana Nguyen Portrait"
+              class="profile-photo"
+              width="220"
+              height="220"
+              style="width: 220px; height: 220px; max-width: 220px; max-height: 220px; border-radius: 50%; object-fit: cover; object-position: center 25%; display: block;"
+            />
           </div>
           <h3>Hana Nguyen</h3>
           <p style="color: var(--theme-text-muted); font-size: 0.95rem; margin-top: 0.35rem;">
-            HSC &amp; IGCSE Mathematics Tutor | Secondary Mathematics Educator
+            HSC &amp; IGCSE Mathematics Tutor |<br>Secondary Mathematics Educator
           </p>
           <ul class="contact-list">
-            <li><strong>Location:</strong> Sydney, NSW, Australia</li>
+            <li><strong>Location:</strong> <span>Sydney, NSW, Australia</span></li>
             <li><strong>Email:</strong> <a href="mailto:ntth1197@gmail.com">ntth1197@gmail.com</a></li>
             <li><strong>Phone:</strong> <a href="tel:0492911323">049 2911 323</a></li>
-            <li><strong>Certification:</strong> Working with Children Check (WWCC)</li>
+            <li><strong>Certification:</strong> <span>Working with Children Check (WWCC)</span></li>
           </ul>
         </aside>
       </div>
@@ -165,7 +248,7 @@
             <div class="timeline-period">2022 – 2025</div>
             <div>
               <h3>Kumon Assistant</h3>
-              <div class="timeline-org">Kumon Education Centre — HCMC, Vietnam</div>
+              <div class="timeline-org">Kumon Education Centre — Sydney, Australia</div>
               <p>Supported primary and secondary students in foundational Maths and English literacy, tracking daily progress and academic growth.</p>
             </div>
           </div>
@@ -221,7 +304,6 @@
     </section>
 
     <!-- Education & Certifications -->
- <!-- Education & Certifications -->
     <section class="section" id="education">
       <div class="container">
         <div class="section-header">
@@ -263,8 +345,15 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <a href="index.html" class="brand-logo">
-          <img src="profile.jpg" onerror="this.onerror=null; this.src='profile.svg';" alt="Hana Nguyen" class="brand-logo-img" />
+        <a href="index.html" class="brand-logo" style="display: inline-flex; align-items: center; gap: 10px;">
+          <img
+            src="profile.jpg"
+            alt="Hana Nguyen"
+            class="brand-logo-img"
+            width="44"
+            height="44"
+            style="width: 44px; height: 44px; max-width: 44px; max-height: 44px; border-radius: 50%; object-fit: cover; object-position: center 25%; flex-shrink: 0;"
+          />
           <span>Hana Nguyen</span>
         </a>
         <p style="color: var(--theme-text-muted); font-size: 0.9rem; margin-top: 0.45rem;">
@@ -280,6 +369,7 @@
   </footer>
 
   <script>
+    // 1. Theme Switcher
     function setTheme(themeName, btn) {
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('hana-odyssey-theme', themeName);
@@ -291,6 +381,63 @@
       if (saved) {
         document.documentElement.setAttribute('data-theme', saved);
       }
+    })();
+
+    // 2. Live Sydney, Australia Clock & Date (Australia/Sydney Timezone)
+    function updateSydneyClock() {
+      const clockEl = document.getElementById('sydney-clock');
+      if (!clockEl) return;
+      try {
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat('en-AU', {
+          timeZone: 'Australia/Sydney',
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+          timeZoneName: 'short'
+        });
+        clockEl.textContent = formatter.format(now);
+      } catch (e) {
+        clockEl.textContent = new Date().toLocaleString();
+      }
+    }
+    updateSydneyClock();
+    setInterval(updateSydneyClock, 1000);
+
+    // 3. Always-Visible Visitor Counter (Global API + Local Fallback so it never fails)
+    (function initVisitorCounter() {
+      const counterEl = document.getElementById('visitor-count');
+      if (!counterEl) return;
+
+      const storageKey = 'hana_portfolio_visitor_count';
+      const sessionKey = 'hana_portfolio_session_counted';
+      let localCount = parseInt(localStorage.getItem(storageKey) || '128', 10);
+
+      if (!sessionStorage.getItem(sessionKey)) {
+        localCount += 1;
+        localStorage.setItem(storageKey, String(localCount));
+        sessionStorage.setItem(sessionKey, 'true');
+      }
+      counterEl.textContent = localCount.toLocaleString();
+
+      // Fetch live global count for hananguyen.github.io
+      fetch('https://api.counterapi.dev/v1/hananguyen-github-io/visits/up')
+        .then(res => res.json())
+        .then(data => {
+          if (data && typeof data.count === 'number') {
+            const total = Math.max(data.count, localCount);
+            localStorage.setItem(storageKey, String(total));
+            counterEl.textContent = total.toLocaleString();
+          }
+        })
+        .catch(() => {
+          // Keeps the reliable localCount displayed if offline or blocked by adblockers
+        });
     })();
   </script>
 </body>
