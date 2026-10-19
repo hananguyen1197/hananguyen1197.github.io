@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects | Hana Nguyen — Mathematics Educator</title>
-  <meta name="description" content="Educational projects by Hana Nguyen, featuring digital mathematics programs, curriculum design, and video lessons." />
+  <meta name="description" content="Educational projects by Hana Nguyen, featuring HOC247 Kids and Teaching STEM for Students." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   <style>
+    /* Inline safety rules so layout, images & fixed top-right TOC always work even if styles.css is cached */
     .brand-logo-img {
       width: 44px !important;
       height: 44px !important;
@@ -19,14 +20,24 @@
       object-fit: cover !important;
       object-position: center 25% !important;
     }
+    .profile-photo-wrapper,
+    .profile-photo {
+      width: 220px !important;
+      height: 220px !important;
+      max-width: 220px !important;
+      max-height: 220px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      object-position: center 25% !important;
+    }
     .header-subbar {
-      margin-top: 0.65rem;
-      padding-top: 0.55rem;
+      margin-top: 0.55rem;
+      padding-top: 0.5rem;
       border-top: 1px dashed #e0d8c8;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.3rem;
+      gap: 0.25rem;
     }
     .status-widgets {
       display: flex;
@@ -40,22 +51,134 @@
       gap: 0.42rem;
       background-color: var(--theme-surface, #f2ece1);
       border: 1px solid var(--theme-border, #e0d8c8);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      padding: 0.26rem 0.75rem;
+      padding: 0.24rem 0.72rem;
       border-radius: 999px;
     }
     .welcome-line {
       font-family: 'Lora', Georgia, serif;
       font-style: italic;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: var(--theme-primary, #1e3a2f);
       font-weight: 500;
       padding-left: 0.2rem;
     }
+    .floating-toc {
+      position: fixed;
+      top: 128px;
+      right: 20px;
+      z-index: 99;
+      width: 245px;
+      background-color: var(--theme-surface-2, #ffffff);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+    }
+    .floating-toc.collapsed {
+      width: auto;
+      min-width: 140px;
+    }
+    .floating-toc.collapsed .toc-body {
+      display: none;
+    }
+    .toc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      background-color: var(--theme-primary, #1e3a2f);
+      color: #ffffff;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .toc-toggle-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .toc-body {
+      padding: 0.65rem 0.75rem;
+    }
+    .toc-list {
+      list-style: none;
+      display: grid;
+      gap: 0.25rem;
+      margin: 0;
+      padding: 0;
+    }
+    .toc-list a {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--theme-text-muted, #52615a);
+      padding: 0.35rem 0.6rem;
+      border-radius: 8px;
+      border-left: 3px solid transparent;
+      text-decoration: none;
+    }
+    .toc-list a:hover,
+    .toc-list a.active {
+      background-color: var(--theme-surface, #f2ece1);
+      color: var(--theme-primary, #1e3a2f);
+      border-left-color: var(--theme-accent, #c86d51);
+    }
+    .toc-list .toc-sub {
+      padding-left: 1.25rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+    .school-stem-block {
+      background-color: var(--theme-surface-2, #ffffff);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      border-radius: 20px;
+      padding: 1.85rem;
+      margin-bottom: 2rem;
+    }
+    .stem-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.35rem;
+      margin-top: 1rem;
+    }
+    .stem-photo-card {
+      border: 1px solid var(--theme-border, #e0d8c8);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--theme-surface, #f2ece1);
+    }
+    .stem-photo-frame {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    .stem-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .stem-photo-caption {
+      padding: 0.7rem 1rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-align: center;
+      background: var(--theme-surface-2, #ffffff);
+      border-top: 1px solid var(--theme-border, #e0d8c8);
+    }
   </style>
 </head>
-<body>
+<body id="top">
 
   <!-- Header -->
   <header class="site-header">
@@ -72,21 +195,24 @@
           />
           <span>Hana Nguyen</span>
         </a>
-        <nav>
-          <ul class="nav-links">
-            <li><a href="index.html">Home &amp; CV</a></li>
-            <li><a href="index.html#skills">Skills</a></li>
-            <li><a href="index.html#experience">Work History</a></li>
-            <li><a href="index.html#education">Education</a></li>
-            <li><a href="projects.html" class="active">Projects</a></li>
-          </ul>
-        </nav>
-        <div class="theme-switcher" title="Odyssey Theme Switcher">
-          <span style="font-size: 0.82rem; font-weight: 600; margin-right: 0.25rem;">Theme:</span>
-          <button class="theme-btn active" style="background:#1e3a2f;" onclick="setTheme('classic', this)" aria-label="Classic Forest Theme"></button>
-          <button class="theme-btn" style="background:#1b365d;" onclick="setTheme('ocean', this)" aria-label="Ocean Theme"></button>
-          <button class="theme-btn" style="background:#7c3f2c;" onclick="setTheme('sand', this)" aria-label="Terracotta Theme"></button>
-          <button class="theme-btn" style="background:#121815;" onclick="setTheme('dark', this)" aria-label="Dark Theme"></button>
+
+        <div class="nav-right-group">
+          <nav aria-label="Primary Navigation">
+            <ul class="nav-links">
+              <li><a href="index.html">Home &amp; CV</a></li>
+              <li><a href="index.html#skills">Skills</a></li>
+              <li><a href="index.html#experience">Work History</a></li>
+              <li><a href="index.html#education">Education</a></li>
+              <li><a href="projects.html" class="active">Projects</a></li>
+            </ul>
+          </nav>
+          <div class="theme-switcher" title="Odyssey Theme Switcher">
+            <span style="font-size: 0.82rem; font-weight: 600; margin-right: 0.25rem;">Theme:</span>
+            <button class="theme-btn active" style="background:#1e3a2f;" onclick="setTheme('classic', this)" aria-label="Classic Forest Theme"></button>
+            <button class="theme-btn" style="background:#1b365d;" onclick="setTheme('ocean', this)" aria-label="Ocean Theme"></button>
+            <button class="theme-btn" style="background:#7c3f2c;" onclick="setTheme('sand', this)" aria-label="Terracotta Theme"></button>
+            <button class="theme-btn" style="background:#121815;" onclick="setTheme('dark', this)" aria-label="Dark Theme"></button>
+          </div>
         </div>
       </div>
 
@@ -111,14 +237,35 @@
     </div>
   </header>
 
+  <!-- Fixed Top-Right Table of Contents (Luon hien thi o goc phai phia tren man hinh) -->
+  <aside class="floating-toc" id="floating-toc" aria-label="Projects Table of Contents">
+    <div class="toc-header" onclick="toggleToc()">
+      <span>📑 Table of Contents</span>
+      <button class="toc-toggle-btn" id="toc-toggle-btn" aria-label="Toggle Table of Contents">−</button>
+    </div>
+    <div class="toc-body">
+      <ul class="toc-list">
+        <li><a href="#projects-intro" class="active">Projects Overview</a></li>
+        <li><a href="#project-hoc247kids">1. HOC247 Kids</a></li>
+        <li><a href="#hoc247-videos" class="toc-sub">↳ Video Lessons</a></li>
+        <li><a href="#project-teaching-stem">2. Teaching STEM for Students</a></li>
+        <li><a href="#stem-btd" class="toc-sub">↳ Binh Tri Dong Secondary</a></li>
+        <li><a href="#stem-tanphu" class="toc-sub">↳ Tan Phu High &amp; Secondary</a></li>
+        <li><a href="#upcoming-projects">3. Future Initiatives</a></li>
+        <li class="toc-divider"></li>
+        <li><a href="index.html" style="color: var(--theme-accent); font-weight: 700;">← Back to Home &amp; CV</a></li>
+      </ul>
+    </div>
+  </aside>
+
   <main>
     <!-- Page Intro -->
-    <section class="hero" style="padding: 3.2rem 0;">
+    <section class="hero" id="projects-intro" style="padding: 3.2rem 0;">
       <div class="container">
         <span class="eyebrow">Portfolio &amp; Initiatives</span>
         <h1>Educational Projects</h1>
         <p class="hero-bio" style="max-width: 780px; margin-bottom: 0;">
-          A collection of my mathematics education projects, online courses, curriculum development initiatives, and interactive video lessons designed to make learning intuitive and engaging.
+          A collection of my mathematics and STEM education projects, online courses, curriculum development initiatives, and interactive lessons designed to make learning intuitive and engaging.
         </p>
       </div>
     </section>
@@ -163,77 +310,166 @@
         </div>
 
         <!-- Embedded YouTube Videos -->
-        <h3 style="font-size: 1.45rem; margin-bottom: 0.5rem;">Featured Video Lessons &amp; Course Introductions</h3>
-        <p style="color: var(--theme-text-muted); margin-bottom: 1rem;">
-          Watch selected video lectures and course introductions from the HOC247 Kids Mathematics program below:
-        </p>
+        <div id="hoc247-videos">
+          <h3 style="font-size: 1.45rem; margin-bottom: 0.5rem;">Featured Video Lessons &amp; Course Introductions</h3>
+          <p style="color: var(--theme-text-muted); margin-bottom: 1rem;">
+            Watch selected video lectures and course introductions from the HOC247 Kids Mathematics program below:
+          </p>
 
-        <div class="video-grid">
-          <!-- Video 1 -->
-          <article class="video-card">
-            <div class="video-wrapper">
-              <iframe
-                src="https://www.youtube.com/embed/PEeD9op1mGU"
-                title="Giới thiệu Combo Học giỏi Toán - HOC247 Kids"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen>
-              </iframe>
-            </div>
-            <div class="video-info">
-              <h4>1. Introduction to the Math Mastery Combo (Giới thiệu Combo Học giỏi Toán)</h4>
-              <p style="font-size: 0.9rem; color: var(--theme-text-muted); margin-bottom: 0.65rem;">
-                Overview of the 3-course Mathematics pathway: Foundation Math, Advanced Math, and Singapore IQ Math.
-              </p>
-              <a href="https://www.youtube.com/watch?v=PEeD9op1mGU" target="_blank" rel="noopener noreferrer" style="font-size: 0.88rem; font-weight: 600;">
-                Watch on YouTube ↗
-              </a>
-            </div>
-          </article>
+          <div class="video-grid">
+            <!-- Video 1 -->
+            <article class="video-card">
+              <div class="video-wrapper">
+                <iframe
+                  src="https://www.youtube.com/embed/PEeD9op1mGU"
+                  title="Giới thiệu Combo Học giỏi Toán - HOC247 Kids"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <div class="video-info">
+                <h4>1. Introduction to the Math Mastery Combo (Giới thiệu Combo Học giỏi Toán)</h4>
+                <p style="font-size: 0.9rem; color: var(--theme-text-muted); margin-bottom: 0.65rem;">
+                  Overview of the 3-course Mathematics pathway: Foundation Math, Advanced Math, and Singapore IQ Math.
+                </p>
+                <a href="https://www.youtube.com/watch?v=PEeD9op1mGU" target="_blank" rel="noopener noreferrer" style="font-size: 0.88rem; font-weight: 600;">
+                  Watch on YouTube ↗
+                </a>
+              </div>
+            </article>
 
-          <!-- Video 2 -->
-          <article class="video-card">
-            <div class="video-wrapper">
-              <iframe
-                src="https://www.youtube.com/embed/GTMhC9XjE08"
-                title="Bài toán xếp hàng - HOC247 Kids"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen>
-              </iframe>
-            </div>
-            <div class="video-info">
-              <h4>2. Queueing Problems (Bài toán xếp hàng)</h4>
-              <p style="font-size: 0.9rem; color: var(--theme-text-muted); margin-bottom: 0.65rem;">
-                Visual step-by-step reasoning lesson helping young learners master ordering and queueing word problems.
-              </p>
-              <a href="https://www.youtube.com/watch?v=GTMhC9XjE08" target="_blank" rel="noopener noreferrer" style="font-size: 0.88rem; font-weight: 600;">
-                Watch on YouTube ↗
-              </a>
-            </div>
-          </article>
+            <!-- Video 2 -->
+            <article class="video-card">
+              <div class="video-wrapper">
+                <iframe
+                  src="https://www.youtube.com/embed/GTMhC9XjE08"
+                  title="Bài toán xếp hàng - HOC247 Kids"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <div class="video-info">
+                <h4>2. Queueing Problems (Bài toán xếp hàng)</h4>
+                <p style="font-size: 0.9rem; color: var(--theme-text-muted); margin-bottom: 0.65rem;">
+                  Visual step-by-step reasoning lesson helping young learners master ordering and queueing word problems.
+                </p>
+                <a href="https://www.youtube.com/watch?v=GTMhC9XjE08" target="_blank" rel="noopener noreferrer" style="font-size: 0.88rem; font-weight: 600;">
+                  Watch on YouTube ↗
+                </a>
+              </div>
+            </article>
 
-          <!-- Video 3 -->
-          <article class="video-card">
-            <div class="video-wrapper">
-              <iframe
-                src="https://www.youtube.com/embed/i7aH8OnhUAI"
-                title="Toán IQ Singapore 1 - HOC247 Kids"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen>
-              </iframe>
-            </div>
-            <div class="video-info">
-              <h4>3. Singapore IQ Mathematics Grade 1 (Toán IQ Singapore 1)</h4>
-              <p style="font-size: 0.9rem; color: var(--theme-text-muted); margin-bottom: 0.65rem;">
-                Developing logical thinking, observation, and problem-solving skills for Grade 1 students.
-              </p>
-              <a href="https://www.youtube.com/watch?v=i7aH8OnhUAI" target="_blank" rel="noopener noreferrer" style="font-size: 0.88rem; font-weight: 600;">
-                Watch on YouTube ↗
-              </a>
-            </div>
-          </article>
+            <!-- Video 3 -->
+            <article class="video-card">
+              <div class="video-wrapper">
+                <iframe
+                  src="https://www.youtube.com/embed/i7aH8OnhUAI"
+                  title="Toán IQ Singapore 1 - HOC247 Kids"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <div class="video-info">
+                <h4>3. Singapore IQ Mathematics Grade 1 (Toán IQ Singapore 1)</h4>
+                <p style="font-size: 0.9rem; color: var(--theme-text-muted); margin-bottom: 0.65rem;">
+                  Developing logical thinking, observation, and problem-solving skills for Grade 1 students.
+                </p>
+                <a href="https://www.youtube.com/watch?v=i7aH8OnhUAI" target="_blank" rel="noopener noreferrer" style="font-size: 0.88rem; font-weight: 600;">
+                  Watch on YouTube ↗
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project 2: Teaching STEM for Students -->
+    <section class="section" id="project-teaching-stem">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Project 02 • Hands-On STEM Education</span>
+          <h2>Teaching STEM for Students</h2>
+          <p>Experiential STEM learning, applied mathematics, and collaborative project-based activities in secondary and high schools</p>
+        </div>
+
+        <!-- School 1: Binh Tri Dong Public Secondary School -->
+        <div class="school-stem-block" id="stem-btd">
+          <div class="school-stem-header">
+            <h3>Binh Tri Dong Public Secondary School</h3>
+            <span class="school-badge">Public Secondary School • STEM Activities</span>
+          </div>
+          <p style="color: var(--theme-text-muted); margin-bottom: 1.25rem;">
+            Guided secondary school students through hands-on STEM experiments and model-building activities, encouraging learners to apply mathematical geometry, measurement, and scientific inquiry to real-world challenges.
+          </p>
+          <div class="stem-photo-grid">
+            <figure class="stem-photo-card">
+              <div class="stem-photo-frame">
+                <img
+                  src="BTD_1.jpg"
+                  alt="Binh Tri Dong Public Secondary School - STEM Activity 1 (BTD_1)"
+                  onerror="handleImgFallback(this, ['BTD_1.png', 'BTD_1.jpeg', 'BTD_1.JPG', 'BTD_1.PNG'], 'BTD_1')"
+                />
+              </div>
+              <figcaption class="stem-photo-caption">
+                Binh Tri Dong Public Secondary School — STEM Activity (BTD_1)
+              </figcaption>
+            </figure>
+
+            <figure class="stem-photo-card">
+              <div class="stem-photo-frame">
+                <img
+                  src="BTD_2.jpg"
+                  alt="Binh Tri Dong Public Secondary School - STEM Activity 2 (BTD_2)"
+                  onerror="handleImgFallback(this, ['BTD_2.png', 'BTD_2.jpeg', 'BTD_2.JPG', 'BTD_2.PNG'], 'BTD_2')"
+                />
+              </div>
+              <figcaption class="stem-photo-caption">
+                Binh Tri Dong Public Secondary School — STEM Activity (BTD_2)
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- School 2: Tan Phu High School and Secondary School -->
+        <div class="school-stem-block" id="stem-tanphu" style="margin-bottom: 0;">
+          <div class="school-stem-header">
+            <h3>Tan Phu High School and Secondary School</h3>
+            <span class="school-badge">Secondary &amp; High School • STEM Projects</span>
+          </div>
+          <p style="color: var(--theme-text-muted); margin-bottom: 1.25rem;">
+            Organized interactive STEM workshops and collaborative engineering-mathematics projects for secondary and high school students, fostering critical thinking, teamwork, and creative problem-solving skills.
+          </p>
+          <div class="stem-photo-grid">
+            <figure class="stem-photo-card">
+              <div class="stem-photo-frame">
+                <img
+                  src="TP_1.jpg"
+                  alt="Tan Phu High School and Secondary School - STEM Activity 1 (TP_1)"
+                  onerror="handleImgFallback(this, ['TP_1.png', 'TP_1.jpeg', 'TP1.jpg', 'TP1.png', 'TP_1.JPG', 'TP_1.PNG'], 'TP_1')"
+                />
+              </div>
+              <figcaption class="stem-photo-caption">
+                Tan Phu High School and Secondary School — STEM Activity (TP_1)
+              </figcaption>
+            </figure>
+
+            <figure class="stem-photo-card">
+              <div class="stem-photo-frame">
+                <img
+                  src="TP_2.jpg"
+                  alt="Tan Phu High School and Secondary School - STEM Activity 2 (TP_2 / TP2)"
+                  onerror="handleImgFallback(this, ['TP2.jpg', 'TP_2.png', 'TP2.png', 'TP_2.jpeg', 'TP2.jpeg', 'TP_2.JPG', 'TP2.JPG'], 'TP_2 / TP2')"
+                />
+              </div>
+              <figcaption class="stem-photo-caption">
+                Tan Phu High School and Secondary School — STEM Activity (TP_2)
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
@@ -292,7 +528,61 @@
       }
     })();
 
-    // 2. Live Sydney, Australia Clock & Date (Australia/Sydney Timezone)
+    // 2. Toggle Floating Table of Contents (Top-Right Muc Luc)
+    function toggleToc() {
+      const toc = document.getElementById('floating-toc');
+      const btn = document.getElementById('toc-toggle-btn');
+      if (!toc || !btn) return;
+      toc.classList.toggle('collapsed');
+      btn.textContent = toc.classList.contains('collapsed') ? '+' : '−';
+    }
+
+    // 3. Scroll-Spy for Table of Contents (Highlights active section automatically)
+    (function initScrollSpy() {
+      const tocLinks = Array.from(document.querySelectorAll('.toc-list a[href^="#"]'));
+      if (!tocLinks.length) return;
+      const sections = tocLinks
+        .map(link => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
+
+      function onScroll() {
+        const scrollPos = window.scrollY + 180;
+        let currentSection = sections[0];
+        for (const sec of sections) {
+          if (sec.offsetTop <= scrollPos) {
+            currentSection = sec;
+          }
+        }
+        tocLinks.forEach(link => {
+          link.classList.toggle(
+            'active',
+            currentSection && link.getAttribute('href') === '#' + currentSection.id
+          );
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // 4. Smart Image Fallback Loader (tries .jpg -> .png -> .jpeg -> alt name -> SVG placeholder)
+    function handleImgFallback(imgEl, fallbacks, labelText) {
+      const idx = parseInt(imgEl.getAttribute('data-fb-idx') || '0', 10);
+      if (idx < fallbacks.length) {
+        imgEl.setAttribute('data-fb-idx', String(idx + 1));
+        imgEl.src = fallbacks[idx];
+      } else {
+        imgEl.onerror = null;
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+          <rect width="640" height="400" fill="#f2ece1"/>
+          <rect x="24" y="24" width="592" height="352" rx="16" fill="none" stroke="#1e3a2f" stroke-width="2" stroke-dasharray="8 6" opacity="0.45"/>
+          <text x="320" y="185" font-family="Georgia, serif" font-size="26" font-weight="bold" fill="#1e3a2f" text-anchor="middle">${labelText}</text>
+          <text x="320" y="225" font-family="sans-serif" font-size="15" fill="#52615a" text-anchor="middle">Upload image file (${labelText}.jpg / .png) to repository</text>
+        </svg>`;
+        imgEl.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+      }
+    }
+
+    // 5. Live Sydney, Australia Clock & Date (Australia/Sydney Timezone)
     function updateSydneyClock() {
       const clockEl = document.getElementById('sydney-clock');
       if (!clockEl) return;
@@ -318,7 +608,7 @@
     updateSydneyClock();
     setInterval(updateSydneyClock, 1000);
 
-    // 3. Always-Visible Visitor Counter (Global API + Local Fallback so it never fails)
+    // 6. Always-Visible Visitor Counter (Global API + Local Fallback)
     (function initVisitorCounter() {
       const counterEl = document.getElementById('visitor-count');
       if (!counterEl) return;
@@ -334,7 +624,6 @@
       }
       counterEl.textContent = localCount.toLocaleString();
 
-      // Fetch live global count for hananguyen.github.io
       fetch('https://api.counterapi.dev/v1/hananguyen-github-io/visits/up')
         .then(res => res.json())
         .then(data => {
@@ -344,9 +633,7 @@
             counterEl.textContent = total.toLocaleString();
           }
         })
-        .catch(() => {
-          // Keeps the reliable localCount displayed if offline or blocked by adblockers
-        });
+        .catch(() => {});
     })();
   </script>
 </body>

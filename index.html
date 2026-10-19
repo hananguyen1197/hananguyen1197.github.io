@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Fallback safety rules in case styles.css is cached */
+    /* Inline safety rules so layout, images & fixed top-right TOC always work even if styles.css is cached */
     .brand-logo-img {
       width: 44px !important;
       height: 44px !important;
@@ -31,13 +31,13 @@
       object-position: center 25% !important;
     }
     .header-subbar {
-      margin-top: 0.65rem;
-      padding-top: 0.55rem;
+      margin-top: 0.55rem;
+      padding-top: 0.5rem;
       border-top: 1px dashed #e0d8c8;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.3rem;
+      gap: 0.25rem;
     }
     .status-widgets {
       display: flex;
@@ -51,22 +51,134 @@
       gap: 0.42rem;
       background-color: var(--theme-surface, #f2ece1);
       border: 1px solid var(--theme-border, #e0d8c8);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      padding: 0.26rem 0.75rem;
+      padding: 0.24rem 0.72rem;
       border-radius: 999px;
     }
     .welcome-line {
       font-family: 'Lora', Georgia, serif;
       font-style: italic;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: var(--theme-primary, #1e3a2f);
       font-weight: 500;
       padding-left: 0.2rem;
     }
+    .floating-toc {
+      position: fixed;
+      top: 128px;
+      right: 20px;
+      z-index: 99;
+      width: 245px;
+      background-color: var(--theme-surface-2, #ffffff);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+    }
+    .floating-toc.collapsed {
+      width: auto;
+      min-width: 140px;
+    }
+    .floating-toc.collapsed .toc-body {
+      display: none;
+    }
+    .toc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      background-color: var(--theme-primary, #1e3a2f);
+      color: #ffffff;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .toc-toggle-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .toc-body {
+      padding: 0.65rem 0.75rem;
+    }
+    .toc-list {
+      list-style: none;
+      display: grid;
+      gap: 0.25rem;
+      margin: 0;
+      padding: 0;
+    }
+    .toc-list a {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--theme-text-muted, #52615a);
+      padding: 0.35rem 0.6rem;
+      border-radius: 8px;
+      border-left: 3px solid transparent;
+      text-decoration: none;
+    }
+    .toc-list a:hover,
+    .toc-list a.active {
+      background-color: var(--theme-surface, #f2ece1);
+      color: var(--theme-primary, #1e3a2f);
+      border-left-color: var(--theme-accent, #c86d51);
+    }
+    .toc-list .toc-sub {
+      padding-left: 1.25rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+    .school-stem-block {
+      background-color: var(--theme-surface-2, #ffffff);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      border-radius: 20px;
+      padding: 1.85rem;
+      margin-bottom: 2rem;
+    }
+    .stem-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.35rem;
+      margin-top: 1rem;
+    }
+    .stem-photo-card {
+      border: 1px solid var(--theme-border, #e0d8c8);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--theme-surface, #f2ece1);
+    }
+    .stem-photo-frame {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    .stem-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .stem-photo-caption {
+      padding: 0.7rem 1rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-align: center;
+      background: var(--theme-surface-2, #ffffff);
+      border-top: 1px solid var(--theme-border, #e0d8c8);
+    }
   </style>
 </head>
-<body>
+<body id="top">
 
   <!-- Header -->
   <header class="site-header">
@@ -83,21 +195,24 @@
           />
           <span>Hana Nguyen</span>
         </a>
-        <nav>
-          <ul class="nav-links">
-            <li><a href="index.html" class="active">Home &amp; CV</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#experience">Work History</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="projects.html">Projects</a></li>
-          </ul>
-        </nav>
-        <div class="theme-switcher" title="Odyssey Theme Switcher">
-          <span style="font-size: 0.82rem; font-weight: 600; margin-right: 0.25rem;">Theme:</span>
-          <button class="theme-btn active" style="background:#1e3a2f;" onclick="setTheme('classic', this)" aria-label="Classic Forest Theme"></button>
-          <button class="theme-btn" style="background:#1b365d;" onclick="setTheme('ocean', this)" aria-label="Ocean Theme"></button>
-          <button class="theme-btn" style="background:#7c3f2c;" onclick="setTheme('sand', this)" aria-label="Terracotta Theme"></button>
-          <button class="theme-btn" style="background:#121815;" onclick="setTheme('dark', this)" aria-label="Dark Theme"></button>
+
+        <div class="nav-right-group">
+          <nav aria-label="Primary Navigation">
+            <ul class="nav-links">
+              <li><a href="index.html" class="active">Home &amp; CV</a></li>
+              <li><a href="#skills">Skills</a></li>
+              <li><a href="#experience">Work History</a></li>
+              <li><a href="#education">Education</a></li>
+              <li><a href="projects.html">Projects</a></li>
+            </ul>
+          </nav>
+          <div class="theme-switcher" title="Odyssey Theme Switcher">
+            <span style="font-size: 0.82rem; font-weight: 600; margin-right: 0.25rem;">Theme:</span>
+            <button class="theme-btn active" style="background:#1e3a2f;" onclick="setTheme('classic', this)" aria-label="Classic Forest Theme"></button>
+            <button class="theme-btn" style="background:#1b365d;" onclick="setTheme('ocean', this)" aria-label="Ocean Theme"></button>
+            <button class="theme-btn" style="background:#7c3f2c;" onclick="setTheme('sand', this)" aria-label="Terracotta Theme"></button>
+            <button class="theme-btn" style="background:#121815;" onclick="setTheme('dark', this)" aria-label="Dark Theme"></button>
+          </div>
         </div>
       </div>
 
@@ -122,15 +237,35 @@
     </div>
   </header>
 
+  <!-- Fixed Top-Right Table of Contents (Luon hien thi o goc phai phia tren man hinh) -->
+  <aside class="floating-toc" id="floating-toc" aria-label="Table of Contents">
+    <div class="toc-header" onclick="toggleToc()">
+      <span>📑 Table of Contents</span>
+      <button class="toc-toggle-btn" id="toc-toggle-btn" aria-label="Toggle Table of Contents">−</button>
+    </div>
+    <div class="toc-body">
+      <ul class="toc-list">
+        <li><a href="#hero-intro" class="active">Introduction</a></li>
+        <li><a href="#statement">Professional Statement</a></li>
+        <li><a href="#skills">Skills &amp; Expertise</a></li>
+        <li><a href="#experience">Work History</a></li>
+        <li><a href="#volunteer">Volunteer Experience</a></li>
+        <li><a href="#education">Education &amp; Certifications</a></li>
+        <li class="toc-divider"></li>
+        <li><a href="projects.html" style="color: var(--theme-accent); font-weight: 700;">→ View Projects Page</a></li>
+      </ul>
+    </div>
+  </aside>
+
   <!-- Hero Section -->
   <main>
-    <section class="hero">
+    <section class="hero" id="hero-intro">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow">Mathematics Educator • NSW Sydney</span>
+          <span class="eyebrow">Mathematics Educator • UNSW Sydney</span>
           <h1>Hello, I am<br>Hana Nguyen.</h1>
           <p class="hero-bio">
-            Hello, I am Hana Nguyen, and I am currently based at <strong>NSW in Sydney, Australia</strong>. Prior to moving to Sydney, I worked as a secondary mathematics teacher in Vietnam, where I taught students across public, private, and international schools. These diverse experiences have given me a comprehensive perspective on mathematics education and inspired me to pursue my passion for teaching wherever I live.
+            Hello, I am Hana Nguyen, and I am currently based at <strong>UNSW in Sydney, Australia</strong>. Prior to moving to Sydney, I worked as a secondary mathematics teacher in Vietnam, where I taught students across public, private, and international schools. These diverse experiences have given me a comprehensive perspective on mathematics education and inspired me to pursue my passion for teaching wherever I live.
           </p>
           <div class="hero-actions">
             <a href="projects.html" class="btn btn-primary">Explore My Projects →</a>
@@ -383,7 +518,61 @@
       }
     })();
 
-    // 2. Live Sydney, Australia Clock & Date (Australia/Sydney Timezone)
+    // 2. Toggle Floating Table of Contents (Top-Right Muc Luc)
+    function toggleToc() {
+      const toc = document.getElementById('floating-toc');
+      const btn = document.getElementById('toc-toggle-btn');
+      if (!toc || !btn) return;
+      toc.classList.toggle('collapsed');
+      btn.textContent = toc.classList.contains('collapsed') ? '+' : '−';
+    }
+
+    // 3. Scroll-Spy for Table of Contents (Highlights active section automatically)
+    (function initScrollSpy() {
+      const tocLinks = Array.from(document.querySelectorAll('.toc-list a[href^="#"]'));
+      if (!tocLinks.length) return;
+      const sections = tocLinks
+        .map(link => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
+
+      function onScroll() {
+        const scrollPos = window.scrollY + 180;
+        let currentSection = sections[0];
+        for (const sec of sections) {
+          if (sec.offsetTop <= scrollPos) {
+            currentSection = sec;
+          }
+        }
+        tocLinks.forEach(link => {
+          link.classList.toggle(
+            'active',
+            currentSection && link.getAttribute('href') === '#' + currentSection.id
+          );
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // 4. Smart Image Fallback Loader (tries .jpg -> .png -> .jpeg -> alt name -> SVG placeholder)
+    function handleImgFallback(imgEl, fallbacks, labelText) {
+      const idx = parseInt(imgEl.getAttribute('data-fb-idx') || '0', 10);
+      if (idx < fallbacks.length) {
+        imgEl.setAttribute('data-fb-idx', String(idx + 1));
+        imgEl.src = fallbacks[idx];
+      } else {
+        imgEl.onerror = null;
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+          <rect width="640" height="400" fill="#f2ece1"/>
+          <rect x="24" y="24" width="592" height="352" rx="16" fill="none" stroke="#1e3a2f" stroke-width="2" stroke-dasharray="8 6" opacity="0.45"/>
+          <text x="320" y="185" font-family="Georgia, serif" font-size="26" font-weight="bold" fill="#1e3a2f" text-anchor="middle">${labelText}</text>
+          <text x="320" y="225" font-family="sans-serif" font-size="15" fill="#52615a" text-anchor="middle">Upload image file (${labelText}.jpg / .png) to repository</text>
+        </svg>`;
+        imgEl.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+      }
+    }
+
+    // 5. Live Sydney, Australia Clock & Date (Australia/Sydney Timezone)
     function updateSydneyClock() {
       const clockEl = document.getElementById('sydney-clock');
       if (!clockEl) return;
@@ -409,7 +598,7 @@
     updateSydneyClock();
     setInterval(updateSydneyClock, 1000);
 
-    // 3. Always-Visible Visitor Counter (Global API + Local Fallback so it never fails)
+    // 6. Always-Visible Visitor Counter (Global API + Local Fallback)
     (function initVisitorCounter() {
       const counterEl = document.getElementById('visitor-count');
       if (!counterEl) return;
@@ -425,7 +614,6 @@
       }
       counterEl.textContent = localCount.toLocaleString();
 
-      // Fetch live global count for hananguyen.github.io
       fetch('https://api.counterapi.dev/v1/hananguyen-github-io/visits/up')
         .then(res => res.json())
         .then(data => {
@@ -435,9 +623,7 @@
             counterEl.textContent = total.toLocaleString();
           }
         })
-        .catch(() => {
-          // Keeps the reliable localCount displayed if offline or blocked by adblockers
-        });
+        .catch(() => {});
     })();
   </script>
 </body>
