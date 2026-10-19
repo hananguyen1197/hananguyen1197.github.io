@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="classic">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Blog | Hana Nguyen — Mathematics Educator</title>
+  <meta name="description" content="Personal blog of Hana Nguyen sharing insights on Mathematics Education, HSC & IGCSE Exam Preparation, STEM Teaching, and life in Sydney." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Inline safety rules so layout, images & fixed top-right TOC always work even if styles.css is cached */
+    .brand-logo-img {
+      width: 44px !important;
+      height: 44px !important;
+      max-width: 44px !important;
+      max-height: 44px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      object-position: center 25% !important;
+    }
+    .header-subbar {
+      margin-top: 0.55rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed #e0d8c8;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+    .status-widgets {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+      background-color: var(--theme-surface, #f2ece1);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.24rem 0.72rem;
+      border-radius: 999px;
+    }
+    .welcome-line {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--theme-primary, #1e3a2f);
+      font-weight: 500;
+      padding-left: 0.2rem;
+    }
+    .floating-toc {
+      position: fixed;
+      top: 128px;
+      right: 20px;
+      z-index: 99;
+      width: 245px;
+      background-color: var(--theme-surface-2, #ffffff);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+    }
+    .floating-toc.collapsed {
+      width: auto;
+      min-width: 140px;
+    }
+    .floating-toc.collapsed .toc-body {
+      display: none;
+    }
+    .toc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      background-color: var(--theme-primary, #1e3a2f);
+      color: #ffffff;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .toc-toggle-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .toc-body {
+      padding: 0.65rem 0.75rem;
+    }
+    .toc-list {
+      list-style: none;
+      display: grid;
+      gap: 0.25rem;
+      margin: 0;
+      padding: 0;
+    }
+    .toc-list a {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--theme-text-muted, #52615a);
+      padding: 0.35rem 0.6rem;
+      border-radius: 8px;
+      border-left: 3px solid transparent;
+      text-decoration: none;
+    }
+    .toc-list a:hover,
+    .toc-list a.active {
+      background-color: var(--theme-surface, #f2ece1);
+      color: var(--theme-primary, #1e3a2f);
+      border-left-color: var(--theme-accent, #c86d51);
+    }
+    .blog-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .filter-btn {
+      background-color: var(--theme-surface, #f2ece1);
+      color: var(--theme-text, #1c2521);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      padding: 0.45rem 1.05rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .filter-btn.active,
+    .filter-btn:hover {
+      background-color: var(--theme-primary, #1e3a2f);
+      color: #ffffff;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .blog-post-card {
+      background-color: var(--theme-surface-2, #ffffff);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+    }
+    .blog-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      font-size: 0.84rem;
+      color: var(--theme-text-muted, #52615a);
+    }
+    .blog-category-badge {
+      background-color: var(--theme-surface, #f2ece1);
+      color: var(--theme-primary, #1e3a2f);
+      font-weight: 700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--theme-border, #e0d8c8);
+    }
+    .blog-full-content {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed var(--theme-border, #e0d8c8);
+    }
+    .read-more-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background-color: var(--theme-surface, #f2ece1);
+      color: var(--theme-primary, #1e3a2f);
+      border: 1px solid var(--theme-border, #e0d8c8);
+      padding: 0.5rem 1.1rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body id="top">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="index.html" class="brand-logo" title="Hana Nguyen Home" style="display: inline-flex; align-items: center; gap: 10px;">
+          <img
+            src="profile.jpg"
+            alt="Hana Nguyen"
+            class="brand-logo-img"
+            width="44"
+            height="44"
+            style="width: 44px; height: 44px; max-width: 44px; max-height: 44px; border-radius: 50%; object-fit: cover; object-position: center 25%; flex-shrink: 0;"
+          />
+          <span>Hana Nguyen</span>
+        </a>
+
+        <div class="nav-right-group">
+          <nav aria-label="Primary Navigation">
+            <ul class="nav-links">
+              <li><a href="index.html">Home &amp; CV</a></li>
+              <li><a href="index.html#skills">Skills</a></li>
+              <li><a href="index.html#experience">Work History</a></li>
+              <li><a href="index.html#education">Education</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="blog.html" class="active">My Blog</a></li>
+            </ul>
+          </nav>
+          <div class="theme-switcher" title="Odyssey Theme Switcher">
+            <span style="font-size: 0.82rem; font-weight: 600; margin-right: 0.25rem;">Theme:</span>
+            <button class="theme-btn active" style="background:#1e3a2f;" onclick="setTheme('classic', this)" aria-label="Classic Forest Theme"></button>
+            <button class="theme-btn" style="background:#1b365d;" onclick="setTheme('ocean', this)" aria-label="Ocean Theme"></button>
+            <button class="theme-btn" style="background:#7c3f2c;" onclick="setTheme('sand', this)" aria-label="Terracotta Theme"></button>
+            <button class="theme-btn" style="background:#121815;" onclick="setTheme('dark', this)" aria-label="Dark Theme"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top-Left Sydney Clock, Visitor Counter & Welcome Message -->
+      <div class="header-subbar">
+        <div class="status-widgets">
+          <div class="status-pill" title="Current Time in Sydney, NSW, Australia">
+            <span>🕒</span>
+            <strong>Sydney, AU:</strong>
+            <span id="sydney-clock">Loading Sydney time...</span>
+          </div>
+          <div class="status-pill" title="Total Website Visitors">
+            <span>👁️</span>
+            <strong>Visitors:</strong>
+            <span id="visitor-count">...</span>
+          </div>
+        </div>
+        <div class="welcome-line">
+          Welcome to my personal website! Wish you have a nice time
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fixed Top-Right Table of Contents (Luon hien thi o goc phai phia tren man hinh) -->
+  <aside class="floating-toc" id="floating-toc" aria-label="Blog Table of Contents">
+    <div class="toc-header" onclick="toggleToc()">
+      <span>📑 Table of Contents</span>
+      <button class="toc-toggle-btn" id="toc-toggle-btn" aria-label="Toggle Table of Contents">−</button>
+    </div>
+    <div class="toc-body">
+      <ul class="toc-list">
+        <li><a href="#blog-intro" class="active">Blog Overview</a></li>
+        <li><a href="#post-cpa-method">1. The CPA Approach in Maths</a></li>
+        <li><a href="#post-hsc-igcse-tips">2. HSC &amp; IGCSE Exam Strategies</a></li>
+        <li><a href="#post-stem-journey">3. Reflections on STEM &amp; Sydney</a></li>
+        <li class="toc-divider"></li>
+        <li><a href="projects.html" style="color: var(--theme-primary); font-weight: 700;">← View Projects</a></li>
+        <li><a href="index.html" style="color: var(--theme-accent); font-weight: 700;">← Back to Home &amp; CV</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <!-- Blog Hero Section -->
+    <section class="hero" id="blog-intro" style="padding: 3.2rem 0;">
+      <div class="container">
+        <span class="eyebrow">Reflections &amp; Articles</span>
+        <h1>My Blog</h1>
+        <p class="hero-bio" style="max-width: 780px; margin-bottom: 0;">
+          Sharing my thoughts, teaching notes, HSC &amp; IGCSE mathematics study tips, hands-on STEM classroom stories, and personal reflections from my educational journey in Vietnam and Sydney, Australia.
+        </p>
+      </div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section class="section">
+      <div class="container">
+        <!-- Category Filter Buttons -->
+        <div class="blog-filter-bar" aria-label="Filter Blog Posts by Category">
+          <button class="filter-btn active" onclick="filterBlog('all', this)">All Posts</button>
+          <button class="filter-btn" onclick="filterBlog('math-ed', this)">Math Education</button>
+          <button class="filter-btn" onclick="filterBlog('exam-prep', this)">HSC &amp; IGCSE Tips</button>
+          <button class="filter-btn" onclick="filterBlog('stem-life', this)">STEM &amp; Life in Sydney</button>
+        </div>
+
+        <div class="blog-grid">
+          <!-- Blog Post 1 -->
+          <article class="blog-post-card" id="post-cpa-method" data-category="math-ed">
+            <div class="blog-meta">
+              <span class="blog-category-badge">Math Education</span>
+              <span>📅 October 2026</span>
+              <span>•</span>
+              <span>⏱️ 4 min read</span>
+            </div>
+            <h2>Why the CPA (Concrete – Pictorial – Abstract) Approach Transforms How Students Learn Mathematics</h2>
+            <p class="blog-excerpt">
+              Many students struggle with mathematics not because they lack ability, but because abstract symbols are introduced too early. Here is how the Singapore CPA model bridges the gap between everyday objects and algebraic thinking.
+            </p>
+            <button class="read-more-toggle" onclick="togglePostContent('content-post-1', this)">
+              Read Full Article ↓
+            </button>
+            <div class="blog-full-content" id="content-post-1" style="display: none;">
+              <p>
+                Throughout my years teaching Singapore IQ Mathematics on <strong>HOC247 Kids</strong> and working with secondary school learners, I have noticed a recurring pattern: when students memorize formulas without visualizing the underlying relationships, they quickly lose confidence when faced with unfamiliar word problems.
+              </p>
+              <p>
+                The <strong>CPA (Concrete – Pictorial – Abstract)</strong> framework solves this by guiding learners through three natural stages of understanding:
+              </p>
+              <ul>
+                <li><strong>Concrete (Thực tiễn):</strong> Students interact with physical objects, measurement tools, or real-life scenarios (such as matchsticks, clock faces, or queueing arrangements).</li>
+                <li><strong>Pictorial (Hình ảnh):</strong> Learners translate those hands-on experiences into visual bar models, diagrams, or geometric sketches that reveal patterns at a glance.</li>
+                <li><strong>Abstract (Khái quát):</strong> Finally, students connect their visual models to formal mathematical notation, equations, and logical proofs with deep comprehension.</li>
+              </ul>
+              <p>
+                Whether I am teaching primary students in Vietnam or tutoring high school students in Sydney, starting with intuition and visual representation always makes mathematics more joyful and lasting.
+              </p>
+            </div>
+          </article>
+
+          <!-- Blog Post 2 -->
+          <article class="blog-post-card" id="post-hsc-igcse-tips" data-category="exam-prep">
+            <div class="blog-meta">
+              <span class="blog-category-badge">HSC &amp; IGCSE Tips</span>
+              <span>📅 September 2026</span>
+              <span>•</span>
+              <span>⏱️ 5 min read</span>
+            </div>
+            <h2>3 Practical Habits for Excelling in HSC &amp; IGCSE Mathematics Examinations</h2>
+            <p class="blog-excerpt">
+              Preparing for high-stakes exams like the NSW HSC or Cambridge IGCSE requires more than solving past papers endlessly. Discover three structured study habits that help my tutoring students build accuracy and exam confidence.
+            </p>
+            <button class="read-more-toggle" onclick="togglePostContent('content-post-2', this)">
+              Read Full Article ↓
+            </button>
+            <div class="blog-full-content" id="content-post-2" style="display: none;">
+              <p>
+                In my one-on-one and small-group tutoring sessions in Sydney, students often ask how to turn their classroom knowledge into consistent exam marks. Here are the three core habits we practice every week:
+              </p>
+              <ul>
+                <li><strong>1. Build a Personalized "Error &amp; Insight Log":</strong> Instead of simply checking the marking scheme and moving on, write down <em>why</em> an error happened (e.g., sign error, misreading domain restrictions, or skipping a justification step) and summarize the key takeaway in your own words.</li>
+                <li><strong>2. Master Structured Working Out:</strong> Both HSC and IGCSE examiners award method marks for clear mathematical communication. Setting out step-by-step reasoning not only secures partial marks but also reduces careless slips under time pressure.</li>
+                <li><strong>3. Interleaved Topic Revision:</strong> Rather than practicing 20 questions of the exact same type in a row, mix questions from Calculus, Trigonometry, and Probability so your brain practices identifying <em>which</em> strategy to use.</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Blog Post 3 -->
+          <article class="blog-post-card" id="post-stem-journey" data-category="stem-life">
+            <div class="blog-meta">
+              <span class="blog-category-badge">STEM &amp; Life in Sydney</span>
+              <span>📅 August 2026</span>
+              <span>•</span>
+              <span>⏱️ 4 min read</span>
+            </div>
+            <h2>From Secondary Classrooms in Vietnam to UNSW Sydney: My Journey in Mathematics &amp; STEM Education</h2>
+            <p class="blog-excerpt">
+              Teaching across public, private, and international schools in Ho Chi Minh City and continuing my educational journey in Sydney has shaped my belief that great mathematics teaching transcends borders.
+            </p>
+            <button class="read-more-toggle" onclick="togglePostContent('content-post-3', this)">
+              Read Full Article ↓
+            </button>
+            <div class="blog-full-content" id="content-post-3" style="display: none;">
+              <p>
+                Looking back at our hands-on STEM projects at <strong>Binh Tri Dong Public Secondary School</strong> and <strong>Tan Phu High School and Secondary School</strong>, some of my favorite moments were watching students light up when they realized that geometry and algebra could help them design real physical models.
+              </p>
+              <p>
+                Moving to Sydney and being part of the vibrant academic community at <strong>UNSW</strong>, while tutoring local students and volunteering with community organizations like Vinnies and JNC, has broadened my perspective even further. Every classroom and culture has its own strengths, yet curiosity and encouragement remain the universal language of learning.
+              </p>
+            </div>
+          </article>
+
+          <!--
+          =====================================================================
+          MẪU ĐỂ BẠN THÊM BÀI VIẾT BLOG MỚI (Copy khối <article>...</article> bên dưới):
+          =====================================================================
+          <article class="blog-post-card" id="post-4" data-category="math-ed">
+            <div class="blog-meta">
+              <span class="blog-category-badge">Math Education</span>
+              <span>📅 Tháng/Năm</span>
+              <span>•</span>
+              <span>⏱️ 3 min read</span>
+            </div>
+            <h2>Tiêu đề bài viết mới của bạn</h2>
+            <p class="blog-excerpt">
+              Đoạn tóm tắt ngắn hiển thị bên ngoài bài viết...
+            </p>
+            <button class="read-more-toggle" onclick="togglePostContent('content-post-4', this)">
+              Read Full Article ↓
+            </button>
+            <div class="blog-full-content" id="content-post-4" style="display: none;">
+              <p>Nội dung chi tiết của bài viết...</p>
+            </div>
+          </article>
+          -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <a href="index.html" class="brand-logo" style="display: inline-flex; align-items: center; gap: 10px;">
+          <img
+            src="profile.jpg"
+            alt="Hana Nguyen"
+            class="brand-logo-img"
+            width="44"
+            height="44"
+            style="width: 44px; height: 44px; max-width: 44px; max-height: 44px; border-radius: 50%; object-fit: cover; object-position: center 25%; flex-shrink: 0;"
+          />
+          <span>Hana Nguyen</span>
+        </a>
+        <p style="color: var(--theme-text-muted); font-size: 0.9rem; margin-top: 0.45rem;">
+          Mathematics Educator • Sydney, NSW, Australia • Inspired by Odyssey Theme
+        </p>
+      </div>
+      <div class="social-links">
+        <a class="social-pill" href="https://www.youtube.com/@hannahnguyen1197" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a class="social-pill" href="https://www.linkedin.com/in/hananguyen2032" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="social-pill" href="https://www.tiktok.com/@sansann1197" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Theme Switcher
+    function setTheme(themeName, btn) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('hana-odyssey-theme', themeName);
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+    (function() {
+      const saved = localStorage.getItem('hana-odyssey-theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+
+    // 2. Toggle Floating Table of Contents
+    function toggleToc() {
+      const toc = document.getElementById('floating-toc');
+      const btn = document.getElementById('toc-toggle-btn');
+      if (!toc || !btn) return;
+      toc.classList.toggle('collapsed');
+      btn.textContent = toc.classList.contains('collapsed') ? '+' : '−';
+    }
+
+    // 3. Blog Category Filter
+    function filterBlog(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      document.querySelectorAll('.blog-post-card').forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // 4. Expand / Collapse Full Blog Post Content
+    function togglePostContent(contentId, btn) {
+      const el = document.getElementById(contentId);
+      if (!el) return;
+      const isHidden = el.style.display === 'none' || !el.style.display;
+      el.style.display = isHidden ? 'block' : 'none';
+      btn.textContent = isHidden ? 'Show Less ↑' : 'Read Full Article ↓';
+    }
+
+    // 5. Scroll-Spy for Table of Contents
+    (function initScrollSpy() {
+      const tocLinks = Array.from(document.querySelectorAll('.toc-list a[href^="#"]'));
+      if (!tocLinks.length) return;
+      const sections = tocLinks
+        .map(link => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
+
+      function onScroll() {
+        const scrollPos = window.scrollY + 180;
+        let currentSection = sections[0];
+        for (const sec of sections) {
+          if (sec.offsetTop <= scrollPos) {
+            currentSection = sec;
+          }
+        }
+        tocLinks.forEach(link => {
+          link.classList.toggle(
+            'active',
+            currentSection && link.getAttribute('href') === '#' + currentSection.id
+          );
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // 6. Live Sydney, Australia Clock & Date (Australia/Sydney Timezone)
+    function updateSydneyClock() {
+      const clockEl = document.getElementById('sydney-clock');
+      if (!clockEl) return;
+      try {
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat('en-AU', {
+          timeZone: 'Australia/Sydney',
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+          timeZoneName: 'short'
+        });
+        clockEl.textContent = formatter.format(now);
+      } catch (e) {
+        clockEl.textContent = new Date().toLocaleString();
+      }
+    }
+    updateSydneyClock();
+    setInterval(updateSydneyClock, 1000);
+
+    // 7. Always-Visible Visitor Counter
+    (function initVisitorCounter() {
+      const counterEl = document.getElementById('visitor-count');
+      if (!counterEl) return;
+
+      const storageKey = 'hana_portfolio_visitor_count';
+      const sessionKey = 'hana_portfolio_session_counted';
+      let localCount = parseInt(localStorage.getItem(storageKey) || '128', 10);
+
+      if (!sessionStorage.getItem(sessionKey)) {
+        localCount += 1;
+        localStorage.setItem(storageKey, String(localCount));
+        sessionStorage.setItem(sessionKey, 'true');
+      }
+      counterEl.textContent = localCount.toLocaleString();
+
+      fetch('https://api.counterapi.dev/v1/hananguyen-github-io/visits/up')
+        .then(res => res.json())
+        .then(data => {
+          if (data && typeof data.count === 'number') {
+            const total = Math.max(data.count, localCount);
+            localStorage.setItem(storageKey, String(total));
+            counterEl.textContent = total.toLocaleString();
+          }
+        })
+        .catch(() => {});
+    })();
+  </script>
+</body>
+</html>
